@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
             	session.setAttribute("name", name);
             	
             	//authentication successful
-	            response.sendRedirect("Welcome.jsp");
+	            response.sendRedirect("Index.jsp");
             }else {
             //authentication failed
 	            response.sendRedirect("Login.jsp");

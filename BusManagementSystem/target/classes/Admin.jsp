@@ -1,13 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Registration page</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <title>Admin Page</title>
+  <link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 5px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 5px 10px;
+    }
+  </style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-secondary bg-gradient sticky-top">
@@ -27,7 +42,6 @@
 				</defs>
 		</svg>
 		
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -54,61 +68,59 @@
             </div>
         </div>
     </nav>
-	
-	<div class="container m-auto">
-		
-		<h2>Registration Form</h2>
-		
-		<form action="register" method="post" class="border border-secondary p-3 ">
-			<div class="mb-3">
-				<label for="name" class="form-label">Name:</label>
-				<input type="text" class="form-control" id="name" name="name" placeholder="Alex" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Name is required")){
-		        		out.println("<div class='text-danger'>Name is required!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<div class="mb-3">
-				<label for="email" class="form-label">Email:</label>
-				<input type="email" class="form-control" id="email" name="email" placeholder="alex@gmail.com" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Email is required")){
-		        		out.println("<div class='text-danger'>Email is required!</div>");
-		        	}
-		        	else if(errors.contains("Invalid email format")){
-		        		out.println("<div class='text-danger'>Invalid email format!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<div class="mb-3">
-				<label for="password" class="form-label">Password:</label>
-				<input type="password" class="form-control" id="password" name="password" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Password is required")){
-		        		out.println("<div class='text-danger'>Password is required!</div>");
-		        	}
-		        	else if(errors.contains("Password must be at least 8 characters long")){
-		        		out.println("<div class='text-danger'>Invalid password format!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<button type="submit" class="btn btn-primary">Register</button>
-			<div>Already registered? <a href="./Login.jsp">Login</a></div>
-		</form>
-	</div>
-	
-	<!-- Bootstrap JavaScript -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <h2>Admin -> Create Bus</h2>
+  <form action="bus" method="post">
+    <label for="busId">Bus ID:</label>
+    <input type="text" id="busId" name="busId" required>
+
+    <label for="busName">Bus Name:</label>
+    <input type="text" id="busName" name="busName" required>
+
+    <label for="busNumber">Bus Number:</label>
+    <input type="text" id="busNumber" name="busNumber" required>
+    
+    <label for="destination">Destination:</label>
+    <input type="text" id="destination" name="destination" required>
+    
+    <label for="latitude">Latitude:</label>
+    <input type="text" id="latitude" name="latitude" required>
+
+    <label for="longitude">Longitude:</label>
+    <input type="text" id="longitude" name="longitude" required>
+
+    <button type="submit">Create Bus</button>
+  </form>
+
+  <!-- <h2>Update Bus</h2>
+  <form id="updateBusForm">
+    <label for="busIdToUpdate">Bus ID:</label>
+    <input type="text" id="busIdToUpdate" name="busIdToUpdate" required>
+
+    <label for="updatedBusName">Updated Bus Name:</label>
+    <input type="text" id="updatedBusName" name="updatedBusName" required>
+
+    <label for="updatedBusNumber">Updated Bus Number:</label>
+    <input type="text" id="updatedBusNumber" name="updatedBusNumber" required>
+
+    <label for="updatedLongitude">Updated Longitude:</label>
+    <input type="text" id="updatedLongitude" name="updatedLongitude" required>
+
+    <label for="updatedLatitude">Updated Latitude:</label>
+    <input type="text" id="updatedLatitude" name="updatedLatitude" required>
+
+    <button type="submit">Update Bus</button>
+  </form>
+
+  <h2>Delete Bus</h2>
+  <form id="deleteBusForm">
+    <label for="busIdToDelete">Bus ID:</label>
+    <input type="text" id="busIdToDelete" name="busIdToDelete" required>
+
+    <button type="submit">Delete Bus</button>
+  </form>
+   -->
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,17 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Registration page</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Contact us</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-secondary bg-gradient sticky-top">
-        <div class="container-fluid d-flex justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary bg-gradient sticky-top">
+        <div class="container-fluid ">
         <svg width="259" height="73" viewBox="0 0 349 163" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<mask id="mask0_12_5" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="349" height="163">
 				<path d="M0.5 50.5L2 58H7.5L10.5 36H12.5L16.5 33.5H29L21.5 67.5L10.5 69.5V79.5H19L18 110L21.5 133L24 137.5L76 139.5L45 143.5L30 145.5L10.5 149V153L18 156.5H35L68 161L96.5 162.5L122 160L286.5 141.5L315.5 139.5L346.5 135L348.5 130.5L339.5 125L320.5 122.5L303 120H307.5L332 114L334 87.5V74L337.5 70.5L343.5 65.5V57.5L341 50.5L332.5 47.5L331 44L341 42.5V39L336 34L329 29L326.5 25.5L324 21.5H313.5L309.5 24.5L290.5 21.5L270.5 19L265 17L261 13L245 10.5L223.5 8L187.5 4L167.5 1L150 2.5H133L129.5 1L119 0H94.5L93 2.5H80.5L66.5 4L51 6.5L39.5 10L34.5 17L31 27.5H16.5L6 30L0.5 38V50.5Z" fill="black"/>
@@ -54,61 +51,35 @@
             </div>
         </div>
     </nav>
-	
-	<div class="container m-auto">
-		
-		<h2>Registration Form</h2>
-		
-		<form action="register" method="post" class="border border-secondary p-3 ">
-			<div class="mb-3">
-				<label for="name" class="form-label">Name:</label>
-				<input type="text" class="form-control" id="name" name="name" placeholder="Alex" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Name is required")){
-		        		out.println("<div class='text-danger'>Name is required!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<div class="mb-3">
-				<label for="email" class="form-label">Email:</label>
-				<input type="email" class="form-control" id="email" name="email" placeholder="alex@gmail.com" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Email is required")){
-		        		out.println("<div class='text-danger'>Email is required!</div>");
-		        	}
-		        	else if(errors.contains("Invalid email format")){
-		        		out.println("<div class='text-danger'>Invalid email format!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<div class="mb-3">
-				<label for="password" class="form-label">Password:</label>
-				<input type="password" class="form-control" id="password" name="password" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Password is required")){
-		        		out.println("<div class='text-danger'>Password is required!</div>");
-		        	}
-		        	else if(errors.contains("Password must be at least 8 characters long")){
-		        		out.println("<div class='text-danger'>Invalid password format!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<button type="submit" class="btn btn-primary">Register</button>
-			<div>Already registered? <a href="./Login.jsp">Login</a></div>
-		</form>
-	</div>
-	
-	<!-- Bootstrap JavaScript -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <div class="container p-10">
+        <h1>Contact Us</h1>
+        <form action="contactFormHandler.jsp" method="post" class="border border-secondary p-3 ">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div> 
+	<footer class="bg-secondary bg-gradient text-light text-center py-3">
+	    <div class="container">
+	        <p>&copy; 2023 our Bus Management System. All rights reserved.</p>
+	        <p>Powered by TransBus</p>
+	        <p>123 Main Street, Addis Ababa, Ethiopia</p>
+	        <p>Email: info@transbus2023.com</p>
+	        <p>Phone: +251-123-456-7890</p>
+	    </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

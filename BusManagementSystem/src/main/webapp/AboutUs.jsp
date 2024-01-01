@@ -1,16 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Registration page</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>About us</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-secondary bg-gradient sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary bg-gradient sticky-top">
         <div class="container-fluid d-flex justify-content-between">
         <svg width="259" height="73" viewBox="0 0 349 163" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<mask id="mask0_12_5" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="349" height="163">
@@ -54,61 +51,27 @@
             </div>
         </div>
     </nav>
-	
-	<div class="container m-auto">
-		
-		<h2>Registration Form</h2>
-		
-		<form action="register" method="post" class="border border-secondary p-3 ">
-			<div class="mb-3">
-				<label for="name" class="form-label">Name:</label>
-				<input type="text" class="form-control" id="name" name="name" placeholder="Alex" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Name is required")){
-		        		out.println("<div class='text-danger'>Name is required!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<div class="mb-3">
-				<label for="email" class="form-label">Email:</label>
-				<input type="email" class="form-control" id="email" name="email" placeholder="alex@gmail.com" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Email is required")){
-		        		out.println("<div class='text-danger'>Email is required!</div>");
-		        	}
-		        	else if(errors.contains("Invalid email format")){
-		        		out.println("<div class='text-danger'>Invalid email format!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<div class="mb-3">
-				<label for="password" class="form-label">Password:</label>
-				<input type="password" class="form-control" id="password" name="password" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Password is required")){
-		        		out.println("<div class='text-danger'>Password is required!</div>");
-		        	}
-		        	else if(errors.contains("Password must be at least 8 characters long")){
-		        		out.println("<div class='text-danger'>Invalid password format!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<button type="submit" class="btn btn-primary">Register</button>
-			<div>Already registered? <a href="./Login.jsp">Login</a></div>
-		</form>
+
+	<div class="d-flex justify-content-between p-5 ">
+		<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec commodo orci. 
+		Nulla facilisi. Maecenas eleifend placerat mauris, eu gravida leo iaculis sit amet. Pellentesque habitant morbi tristique senectus 
+		et netus et malesuada fames ac turpis egestas. Morbi faucibus quam eget felis tempus, id ultricies odio aliquet. Vestibulum ante ipsum primis
+		 in faucibus orci luctus et ultrices posuere cubilia Curae; Sed semper pulvinar enim eget venenatis.Nullam euismod arcu non tempor aliquet. 
+		 Sed eu viverra mi.auctor, eros a mollis mattis, justo elit lobortis orci, at pulvinar mi mi nec ex. Mauris nec mi tristique, lacinia odio nec,</div>
+  		<img src="./Images/bus2.jpg" class="img-fluid " alt="Bus Image">
 	</div>
-	
-	<!-- Bootstrap JavaScript -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+	<footer class="bg-secondary bg-gradient text-light text-center py-3">
+	    <div class="container">
+	        <p>&copy; 2023 our Bus Management System. All rights reserved.</p>
+	        <p>Powered by TransBus</p>
+	        <p>123 Main Street, Addis Ababa, Ethiopia</p>
+	        <p>Email: info@transbus2023.com</p>
+	        <p>Phone: +251-123-456-7890</p>
+	    </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

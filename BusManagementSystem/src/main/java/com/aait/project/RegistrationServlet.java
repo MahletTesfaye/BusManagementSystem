@@ -59,25 +59,17 @@ public class RegistrationServlet extends HttpServlet {
         } else if (password.length() < 8) {
             errors.add("Password must be at least 8 characters long");
         }
-//        if (!errors.isEmpty()) {
-//            // If there are validation errors, store the errors in request scope and forward to the registration page
-//            request.setAttribute("errors", errors);
-//            request.getRequestDispatcher("Registration.jsp").forward(request, response);
-//            return;
-//        }
-      
+        
         try {
             String query = "insert into users (name, email, password) values(?, ?, ?);";
             PreparedStatement stmnt = conn.prepareStatement(query);
             stmnt.setString(1, name);
             stmnt.setString(2, email);
             stmnt.setString(3, password);
-
             stmnt.executeUpdate();
             response.sendRedirect("Confirmation.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
 }
