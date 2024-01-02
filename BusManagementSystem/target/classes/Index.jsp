@@ -6,7 +6,7 @@
     <title>Home page</title>
     <link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="webjars/leaflet/1.7.1/dist/leaflet.css"/>
-  <script src="webjars/leaflet/1.7.1/dist/leaflet.js"></script>
+    <script src="webjars/leaflet/1.7.1/dist/leaflet.js"></script>
 </head>
 
 <body>
@@ -68,16 +68,24 @@
         </div>
    	</div>
    	<hr>
-    <div class="container mt-5">
+    <div class="container m-5">
 	
-    	<div class="d-flex justify-content-between">
-          <div class="d-flex justify-content-between p-4">
-				<div>
-				  <h4>Bus Information</h4>
-				  <p>Bus ID: <%= request.getAttribute("busId") %></p>
-				  <p>Bus Name: <%= request.getAttribute("busName") %></p>
-				  <p>Bus Number: <%= request.getAttribute("busNumber") %></p>
-				  <p>Destination: <%= request.getAttribute("destination") %></p>
+    	<div class="d-flex justify-content-between p-5">
+          <div class="d-flex justify-content-between">
+				<div class="container">
+				  <table class="table table-striped">
+				    <thead>
+				      <tr>
+				        <th>Bus ID</th>
+				        <th>Bus Name</th>
+				        <th>Bus Number</th>
+				        <th>Destination</th>
+				        <th>Latitude</th>
+				        <th>Longitude</th>
+				      </tr>
+				    </thead>
+				    <tbody id="busTable"></tbody>
+				  </table>
 				</div>
 				<div id="mapContainer" style="height: 600px; width: 600px;"></div>
 				
@@ -95,6 +103,33 @@
 	    </div>
     </footer>
 	<script>
+	  function updateTable(busData) {
+		    var table = document.getElementById("busTable");
+
+		    // Clear previous table rows
+		    table.innerHTML = "";
+
+		    // Add rows to the table for each bus
+		    busData.forEach(function(bus) {
+		      var row = table.insertRow();
+		      row.innerHTML = 
+		        '<td>'+ bus.busId + '</td>'+
+		        '<td>'+ bus.busName + '</td>'+
+		        '<td>'+ bus.busNumber + '</td>'+
+		        '<td>'+ bus.destination + '</td>'+
+		        '<td>'+ bus.latitude + '</td>'+
+		        '<td>'+ bus.longitude + '</td>'
+		      ;
+		    });
+		  }
+
+		  fetch("bus")
+		    .then(response => response.json())
+		    .then(data => {
+		      updateTable(data);
+		    });
+		  
+		 
         var map = L.map('mapContainer').setView([0, 0], 3); // Initialize map with a default view
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

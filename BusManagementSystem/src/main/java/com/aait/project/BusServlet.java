@@ -48,6 +48,12 @@ private Connection conn; // Declare the Connection object as an instance variabl
             ResultSet rs = stmt.executeQuery("SELECT * FROM buses");
 
             JSONArray busDataArray = new JSONArray();
+         // Add the buttons data to the JSON objects
+            for (int i = 0; i < busDataArray.length(); i++) {
+                JSONObject busData = busDataArray.getJSONObject(i);
+                busData.put("editButton", "<button type=\"button\" class=\"btn btn-primary\" onclick=\"editButtonClicked('" + busData.getString("busId") + "')\">Edit</button>");
+                busData.put("deleteButton", "<button type=\"button\" class=\"btn btn-danger\" onclick=\"deleteButtonClicked('" + busData.getString("busId") + "')\">Delete</button>");
+            }
 
             // Iterate over the result set and create a JSON object for each bus
             while (rs.next()) {
@@ -78,6 +84,7 @@ private Connection conn; // Declare the Connection object as an instance variabl
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	
         
     }
 

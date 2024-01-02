@@ -63,6 +63,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-light text-center hover-overlay" href="./Login.jsp">Login</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light text-center hover-overlay" href="./AdminDisplay.jsp">Admin display</a>
+                    </li>
                 </ul>
                 
             </div>
