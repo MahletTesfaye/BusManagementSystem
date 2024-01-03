@@ -74,6 +74,8 @@ private Connection conn; // Declare the Connection object as an instance variabl
 
             // Set the response content type to JSON
             response.setContentType("application/json");
+         // Inside the doGet method
+            request.setAttribute("busId", request.getParameter("busId"));
 
             // Write the JSON array to the response
             PrintWriter out = response.getWriter();
@@ -127,6 +129,63 @@ private Connection conn; // Declare the Connection object as an instance variabl
 
         RequestDispatcher rd = request.getRequestDispatcher("/Index.jsp");
         rd.forward(request, response);
+    }
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String busId = request.getParameter("busId");
+        String busName = request.getParameter("busName");
+        String busNumber = request.getParameter("busNumber");
+        String destination = request.getParameter("destination");
+        String latitude = request.getParameter("latitude");
+        String longitude = request.getParameter("longitude");
+
+        try {
+            Connection conn = DatabaseManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                    "UPDATE buses SET busName = ?, busNumber = ?, destination = ?, latitude = ?, longitude = ? WHERE busId = ?");
+            stmt.setString(1, busName);
+            stmt.setString(2, busNumber);
+            stmt.setString(3, destination);
+            stmt.setString(4, latitude);
+            stmt.setString(5, longitude);
+            stmt.setString(6, busId);
+            stmt.executeUpdate();
+            stmt.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while updating the bus data.");
+            return;
+        }
+
+        response.setContentType("text/plain");
+        PrintWriter out = response.getWriter();
+        out.print("Bus data updated successfully");
+        out.flush();
+    }
+    
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String busId = request.getParameter("busId");
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM buses WHERE busId = ?");
+            stmt.setString(1, busId);
+            int affectedRows = stmt.executeUpdate();
+            stmt.close();
+
+            if (affectedRows > 0) {
+                // Return success response
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                // Return error response
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Bus not found.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while deleting the bus.");
+        }
     }
     
 }

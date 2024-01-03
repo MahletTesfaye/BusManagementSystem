@@ -93,35 +93,7 @@
 
     <button type="submit">Create Bus</button>
   </form>
-
-  <!-- <h2>Update Bus</h2>
-  <form id="updateBusForm">
-    <label for="busIdToUpdate">Bus ID:</label>
-    <input type="text" id="busIdToUpdate" name="busIdToUpdate" required>
-
-    <label for="updatedBusName">Updated Bus Name:</label>
-    <input type="text" id="updatedBusName" name="updatedBusName" required>
-
-    <label for="updatedBusNumber">Updated Bus Number:</label>
-    <input type="text" id="updatedBusNumber" name="updatedBusNumber" required>
-
-    <label for="updatedLongitude">Updated Longitude:</label>
-    <input type="text" id="updatedLongitude" name="updatedLongitude" required>
-
-    <label for="updatedLatitude">Updated Latitude:</label>
-    <input type="text" id="updatedLatitude" name="updatedLatitude" required>
-
-    <button type="submit">Update Bus</button>
-  </form>
-
-  <h2>Delete Bus</h2>
-  <form id="deleteBusForm">
-    <label for="busIdToDelete">Bus ID:</label>
-    <input type="text" id="busIdToDelete" name="busIdToDelete" required>
-
-    <button type="submit">Delete Bus</button>
-  </form>
-   -->
+	
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

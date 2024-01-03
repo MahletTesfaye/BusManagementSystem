@@ -52,13 +52,22 @@
         </div>
     </nav>
 
-	<div class="d-flex justify-content-between p-5 ">
-		<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec commodo orci. 
-		Nulla facilisi. Maecenas eleifend placerat mauris, eu gravida leo iaculis sit amet. Pellentesque habitant morbi tristique senectus 
-		et netus et malesuada fames ac turpis egestas. Morbi faucibus quam eget felis tempus, id ultricies odio aliquet. Vestibulum ante ipsum primis
-		 in faucibus orci luctus et ultrices posuere cubilia Curae; Sed semper pulvinar enim eget venenatis.Nullam euismod arcu non tempor aliquet. 
-		 Sed eu viverra mi.auctor, eros a mollis mattis, justo elit lobortis orci, at pulvinar mi mi nec ex. Mauris nec mi tristique, lacinia odio nec,</div>
-  		<img src="./Images/bus2.jpg" class="img-fluid " alt="Bus Image">
+	<div class="container">
+	    <div class="row m-5">
+	        <div class="col-md-6">
+	            <p>
+	                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec commodo orci. Nulla facilisi.
+	                Maecenas eleifend placerat mauris, eu gravida leo iaculis sit amet. Pellentesque habitant morbi tristique senectus
+	                et netus et malesuada fames ac turpis egestas. Morbi faucibus quam eget felis tempus, id ultricies odio aliquet.
+	                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed semper pulvinar enim eget venenatis.
+	                Nullam euismod arcu non tempor aliquet. Sed eu viverra mi. Auctor, eros a mollis mattis, justo elit lobortis orci,
+	                at pulvinar mi mi nec ex. Mauris nec mi tristique, lacinia odio nec.
+	            </p>
+	        </div>
+	        <div class="col-md-6">
+	            <img src="./Images/bus2.jpg" class="img-fluid" alt="Bus Image">
+	        </div>
+	    </div>
 	</div>
   
 	<footer class="bg-secondary bg-gradient text-light text-center py-3">

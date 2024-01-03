@@ -69,29 +69,27 @@
    	</div>
    	<hr>
     <div class="container m-5">
-	
-    	<div class="d-flex justify-content-between p-5">
-          <div class="d-flex justify-content-between">
-				<div class="container">
-				  <table class="table table-striped">
-				    <thead>
-				      <tr>
-				        <th>Bus ID</th>
-				        <th>Bus Name</th>
-				        <th>Bus Number</th>
-				        <th>Destination</th>
-				        <th>Latitude</th>
-				        <th>Longitude</th>
-				      </tr>
-				    </thead>
-				    <tbody id="busTable"></tbody>
-				  </table>
-				</div>
-				<div id="mapContainer" style="height: 600px; width: 600px;"></div>
-				
-		  </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Bus ID</th>
+                            <th>Bus Name</th>
+                            <th>Bus Number</th>
+                            <th>Destination</th>
+                        </tr>
+                    </thead>
+                    <tbody id="busTable"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div id="mapContainer" style="height: 600px;"></div>
+        </div>
     </div>
-	</div>
+    </div>
 	
 	<footer class="bg-secondary bg-gradient text-light text-center py-3">
 	    <div class="container">
@@ -116,9 +114,7 @@
 		        '<td>'+ bus.busId + '</td>'+
 		        '<td>'+ bus.busName + '</td>'+
 		        '<td>'+ bus.busNumber + '</td>'+
-		        '<td>'+ bus.destination + '</td>'+
-		        '<td>'+ bus.latitude + '</td>'+
-		        '<td>'+ bus.longitude + '</td>'
+		        '<td>'+ bus.destination + '</td>'
 		      ;
 		    });
 		  }
@@ -129,8 +125,7 @@
 		      updateTable(data);
 		    });
 		  
-		 
-        var map = L.map('mapContainer').setView([0, 0], 3); // Initialize map with a default view
+        var map = L.map('mapContainer').setView([9,38.8], 12); // Initialize map with a default view
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
