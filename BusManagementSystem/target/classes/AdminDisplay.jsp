@@ -7,8 +7,8 @@
 <title>Admin Display</title>
 <link rel="stylesheet" href="webjars/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
-<body>
-	<a href="Admin.jsp">Admin page</a>
+<body class="p-5">
+	<a class="btn btn-secondary" href="Admin.jsp" role="button">Back to Admin Home page</a>
 	<div class="d-flex justify-content-between">
 				<div class="container">
 				  <table class="table table-striped">

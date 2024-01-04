@@ -40,20 +40,16 @@ private Connection conn; // Declare the Connection object as an instance variabl
         }
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       
-            // Execute the SQL query to retrieve the bus data
-    	try {
-    		Connection conn = DatabaseManager.getConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM buses");
+        // Retrieve the search input and search option from the request parameters
+        String searchInput = request.getParameter("searchInput");
+        String searchOption = request.getParameter("searchOption");
 
-            JSONArray busDataArray = new JSONArray();
-         // Add the buttons data to the JSON objects
-            for (int i = 0; i < busDataArray.length(); i++) {
-                JSONObject busData = busDataArray.getJSONObject(i);
-                busData.put("editButton", "<button type=\"button\" class=\"btn btn-primary\" onclick=\"editButtonClicked('" + busData.getString("busId") + "')\">Edit</button>");
-                busData.put("deleteButton", "<button type=\"button\" class=\"btn btn-danger\" onclick=\"deleteButtonClicked('" + busData.getString("busId") + "')\">Delete</button>");
-            }
+        // Execute the SQL query to retrieve all bus data
+        JSONArray busDataArray = new JSONArray();
+        try {
+            Connection conn = DatabaseManager.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM buses");
+            ResultSet rs = stmt.executeQuery();
 
             // Iterate over the result set and create a JSON object for each bus
             while (rs.next()) {
@@ -64,6 +60,7 @@ private Connection conn; // Declare the Connection object as an instance variabl
                 busData.put("destination", rs.getString("destination"));
                 busData.put("latitude", rs.getString("latitude"));
                 busData.put("longitude", rs.getString("longitude"));
+                busData.put("highlighted", false); // Flag to indicate whether the bus should be highlighted
                 busDataArray.put(busData);
             }
 
@@ -72,24 +69,44 @@ private Connection conn; // Declare the Connection object as an instance variabl
             stmt.close();
             conn.close();
 
-            // Set the response content type to JSON
-            response.setContentType("application/json");
-         // Inside the doGet method
-            request.setAttribute("busId", request.getParameter("busId"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-            // Write the JSON array to the response
-            PrintWriter out = response.getWriter();
-            out.print(busDataArray.toString());
-            out.flush();
-           
-    	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-        
+       // Perform search if search input and option are provided
+        if (searchInput != null && searchOption != null) {
+            // Filter the bus data based on the search criteria
+            JSONArray filteredBusDataArray = new JSONArray();
+
+            for (int i = 0; i < busDataArray.length(); i++) {
+                JSONObject busData = busDataArray.getJSONObject(i);
+                String cellValue = "";
+
+                if (searchOption.equals("busNumber")) {
+                    cellValue = busData.getString("busNumber");
+                } else if (searchOption.equals("destination")) {
+                    cellValue = busData.getString("destination");
+                }
+
+                if (cellValue.toLowerCase().contains(searchInput.toLowerCase())) {
+//                    busData.put("highlighted", true);
+                    filteredBusDataArray.put(busData);
+                }
+            }
+
+            busDataArray = filteredBusDataArray;
+        }
+
+        // Set the response content type to JSON
+        response.setContentType("application/json");
+
+        // Write the JSON array to the response
+        PrintWriter out = response.getWriter();
+        out.print(busDataArray.toString());
+        out.flush();
     }
 
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String busId = request.getParameter("busId");
         String busName = request.getParameter("busName");

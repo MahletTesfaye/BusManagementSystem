@@ -112,6 +112,20 @@
 		    <artifactId>font-awesome</artifactId>
 		    <version>6.5.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars.npm/bootstrap-icons -->
+		<dependency>
+		    <groupId>org.webjars.npm</groupId>
+		    <artifactId>bootstrap-icons</artifactId>
+		    <version>1.11.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.6.2</version>
+		</dependency>
+
 
 		
 	</dependencies>

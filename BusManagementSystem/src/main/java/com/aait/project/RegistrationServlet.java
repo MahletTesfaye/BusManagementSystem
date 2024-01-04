@@ -67,7 +67,7 @@ public class RegistrationServlet extends HttpServlet {
             stmnt.setString(2, email);
             stmnt.setString(3, password);
             stmnt.executeUpdate();
-            response.sendRedirect("Confirmation.jsp");
+            response.sendRedirect("Login.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
         }
