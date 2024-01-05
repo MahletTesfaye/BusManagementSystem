@@ -64,20 +64,60 @@ public class LoginServlet extends HttpServlet {
 
             ResultSet rs = stmnt.executeQuery();
             if(rs.next()) {
-        
-            	// create session
-            	HttpSession session = request.getSession();
-            	String name = rs.getString("name");
-            	session.setAttribute("name", name);
-            	
-            	//authentication successful
-	            response.sendRedirect("Index.jsp");
-            }else {
-            //authentication failed
-	            response.sendRedirect("Login.jsp");
+                // create session
+                HttpSession session = request.getSession();
+                String name = rs.getString("name");
+                session.setAttribute("name", name);
+                
+                // authentication successful
+                response.sendRedirect("Index.jsp");
+            } else {
+                // authentication failed
+                response.sendRedirect("Login.jsp");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false); // Get the current session (do not create a new one if it doesn't exist)
+
+        if (session != null) {
+            // Retrieve the user ID from the session
+            String name = (String) session.getAttribute("name");
+
+            // Clear the session
+            session.invalidate();
+
+            if (name != null) {
+                // Perform the database deletion for the user
+                try {
+                    // Connect to the database and execute the deletion query
+                    String sql = "DELETE FROM users WHERE name = ?";
+                    PreparedStatement statement = conn.prepareStatement(sql);
+                    statement.setString(1, name);
+                    int rowsAffected = statement.executeUpdate();
+
+                    // Close the database resources
+                    statement.close();
+                    
+                    if (rowsAffected > 0) {
+                        // Data deleted successfully
+                        response.sendRedirect("Login.jsp"); // Redirect the user to the login page
+                    } else {
+                        // Data deletion failed
+                        response.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found.");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while deleting the User.");
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "User not found");
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Session not found");
         }
     }
 }
