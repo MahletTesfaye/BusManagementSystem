@@ -108,80 +108,72 @@ private Connection conn; // Declare the Connection object as an instance variabl
 
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String busId = request.getParameter("busId");
-        String busName = request.getParameter("busName");
-        String busNumber = request.getParameter("busNumber");
-        String destination = request.getParameter("destination");
-        String latitude = request.getParameter("latitude");
-        String longitude = request.getParameter("longitude");
-        
-        // Store the bus data in the database
-        try {
-        	Connection conn = DatabaseManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO buses (busId, busName, busNumber, destination, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)");
-            stmt.setString(1, busId);
-            stmt.setString(2, busName);
-            stmt.setString(3, busNumber);
-            stmt.setString(4, destination);
-            stmt.setString(5, latitude);
-            stmt.setString(6, longitude);
-            stmt.executeUpdate();
-            stmt.close();
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle any database errors
-            // You can redirect the user to an error page or display an error message
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while storing the bus data.");
-            return;
-        }
-
-        // Transfer the bus data to another page
-        request.setAttribute("busId", busId);
-        request.setAttribute("busName", busName);
-        request.setAttribute("busNumber", busNumber);
-        request.setAttribute("destination", destination);
-        request.setAttribute("latitude", latitude);
-        request.setAttribute("longitude", longitude);
-
-        RequestDispatcher rd = request.getRequestDispatcher("/Index.jsp");
-        rd.forward(request, response);
-    }
-
-    protected void doPut(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String busId = request.getParameter("busId");
-        String busName = request.getParameter("busName");
-        String busNumber = request.getParameter("busNumber");
-        String destination = request.getParameter("destination");
-        String latitude = request.getParameter("latitude");
-        String longitude = request.getParameter("longitude");
-
-        try {
-            Connection conn = DatabaseManager.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(
-                    "UPDATE buses SET busName = ?, busNumber = ?, destination = ?, latitude = ?, longitude = ? WHERE busId = ?");
-            stmt.setString(1, busName);
-            stmt.setString(2, busNumber);
-            stmt.setString(3, destination);
-            stmt.setString(4, latitude);
-            stmt.setString(5, longitude);
-            stmt.setString(6, busId);
-            stmt.executeUpdate();
-            stmt.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while updating the bus data.");
-            return;
-        }
-
-        response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
-        out.print("Bus data updated successfully");
-        out.flush();
+        
+        // to update form value accept edit parameter
+        if (request.getParameter("busId")!= null) {
+        	//create parameter
+	        String busId = request.getParameter("busId");
+	        String busName = request.getParameter("busName");
+	        String busNumber = request.getParameter("busNumber");
+	        String destination = request.getParameter("destination");
+	        String latitude = request.getParameter("latitude");
+	        String longitude = request.getParameter("longitude");
+	
+	        try {
+	            Connection conn = DatabaseManager.getConnection();
+		        PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO buses (busId, busName, busNumber, destination, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)");
+		        // Perform the INSERT query
+		        insertStmt.setString(1, busId);
+		        insertStmt.setString(2, busName);
+		        insertStmt.setString(3, busNumber);
+		        insertStmt.setString(4, destination);
+		        insertStmt.setString(5, latitude);
+		        insertStmt.setString(6, longitude);
+		        insertStmt.executeUpdate();
+		        insertStmt.close(); 
+		        conn.close();
+		        RequestDispatcher rds=request.getRequestDispatcher("AdminDisplay.jsp");
+		        rds.forward(request,response);
+		    }catch (SQLException e) {
+		            e.printStackTrace();
+		            // Handle any database errors
+		            // You can redirect the user to an error page or display an error message
+		            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while storing the bus data.");
+		    }
+        }
+        else {
+	        //edit parameter
+	        String updatedBusId = request.getParameter("updatedBusId");
+	        String updatedBusName = request.getParameter("updatedBusName");
+	        String updatedBusNumber = request.getParameter("updatedBusNumber");
+	        String updatedDestination = request.getParameter("updatedDestination");
+	        String updatedLatitude = request.getParameter("updatedLatitude");
+	        String updatedLongitude = request.getParameter("updatedLongitude");
+	           //Store the bus data in the database
+	        try {
+	            Connection conn = DatabaseManager.getConnection();
+	               PreparedStatement updateStmt=conn.prepareStatement("UPDATE buses SET busName = ?, busNumber = ?, destination = ?, latitude = ?, longitude = ? WHERE busId = ?");
+	               updateStmt.setString(1, updatedBusName);
+	               updateStmt.setString(2, updatedBusNumber);
+	               updateStmt.setString(3, updatedDestination);
+	               updateStmt.setString(4, updatedLatitude);
+	               updateStmt.setString(5, updatedLongitude);
+	               updateStmt.setString(6, updatedBusId);
+	               updateStmt.executeUpdate();
+	               updateStmt.close();
+	               RequestDispatcher rd=request.getRequestDispatcher("AdminDisplay.jsp");
+	               rd.forward(request,response);
+	        }catch (SQLException e) {
+	            e.printStackTrace();
+	            // Handle any database errors
+	            // You can redirect the user to an error page or display an error message
+	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while storing the bus data.");
+	        }
+        }
     }
-    
+ 
+           
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String busId = request.getParameter("busId");
 

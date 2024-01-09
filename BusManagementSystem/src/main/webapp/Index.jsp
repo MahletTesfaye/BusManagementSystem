@@ -58,7 +58,7 @@
 	                  <a class="nav-link text-light text-center fs-5 " href="./Login.jsp">Login</a>
 	              </li>
 	              <li class="nav-item text-center" style="border: 1px solid black">
-				    <a class="nav-link session" href="#" onclick="logout();">
+				    <a class="nav-link session" href="UserProfile.jsp">
 				        <div>Welcome, </div>
 				        <% 
 				            String username = (String) session.getAttribute("name");
@@ -74,12 +74,12 @@
 	      </div>
 	  </div>
 	</nav>
-   	<div class="container-fluid w-75 mt-3 w-50">
+   	<div class="container-fluid w-50 mt-3 w-50">
 		    <form class="d-flex justify-content-end" >
 		        <input id="searchInput" class="form-control" type="search" placeholder="Search" aria-label="Search" style="background-color: transparent;">
 		        <select id="searchOption" class="form-select" aria-label="Search Option" style="background-color: transparent;">
 		            <option value="busNumber">By Bus Number</option>
-		            <option value="destination" class="w-50">By Destination</option>
+		            <option value="destination" class="w-25">By Destination</option>
 		        </select>
 		        <button id="searchButton" class="btn btn-outline-success" type="button">Search</button>
 		    </form>
@@ -214,31 +214,7 @@
                 updateMap(data);
             });
     </script>
-    <script>
-	    function logout() {
-	    if (confirm('Are you sure you want to log out?')) {
-	        var xhr = new XMLHttpRequest();
-	        xhr.open('DELETE', './login', true);
-	        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	        xhr.addEventListener('load', function() {
-	            if (xhr.status === 200) {
-	                // Successful logout
-	                window.location.href = 'Login.jsp'; // Redirect to the login page
-	                
-	            } else {
-	                // Handle error
-	                console.error(xhr.status + ': ' + xhr.statusText);
-	                
-	            }
-	            location.reload();
-	            alert('Successfully logged out!')
-	            
-	        });
-	        xhr.send();
-	    	}
-		}
-	 </script>
-	    
+    	    
    	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    	<script src="webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>

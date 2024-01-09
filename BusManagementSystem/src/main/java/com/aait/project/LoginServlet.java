@@ -66,8 +66,14 @@ public class LoginServlet extends HttpServlet {
             if(rs.next()) {
                 // create session
                 HttpSession session = request.getSession();
+                String id = rs.getString("id");
+                session.setAttribute("id", id);
                 String name = rs.getString("name");
                 session.setAttribute("name", name);
+                String email2 = rs.getString("email");
+                session.setAttribute("email", email2);
+                String password2 = rs.getString("password");
+                session.setAttribute("password", password2);
                 
                 // authentication successful
                 response.sendRedirect("Index.jsp");

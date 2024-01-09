@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 	<meta charset="UTF-8">
     <link rel="icon" href="./Images/favicon.ico" type="image/x-icon">
     <title>Admin page</title>
@@ -37,7 +37,7 @@
   </style>
 </head>
 
-<body>
+<body >
     <nav class="navbar navbar-expand-lg navbar-light bg-secondary bg-gradient sticky-top">
 	  <div class="container-fluid d-flex justify-content-between">
 	      <svg width="259" height="73" viewBox="0 0 349 163" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

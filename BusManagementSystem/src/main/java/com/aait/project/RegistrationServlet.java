@@ -1,5 +1,6 @@
 package com.aait.project;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/register")
 public class RegistrationServlet extends HttpServlet {
@@ -39,39 +40,72 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        
-     // Perform validation
-        List<String> errors = new ArrayList<>();
-
-        if (name == null || name.trim().isEmpty()) {
-            errors.add("Name is required");
+        if (request.getParameter("name")!= null) {
+	    	String name = request.getParameter("name");
+	        String email = request.getParameter("email");
+	        String password = request.getParameter("password");
+	        
+	     // Perform validation
+	        List<String> errors = new ArrayList<>();
+	
+	        if (name == null || name.trim().isEmpty()) {
+	            errors.add("Name is required");
+	        }
+	
+	        if (email == null || email.trim().isEmpty()) {
+	            errors.add("Email is required");
+	        } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+	            errors.add("Invalid email format");
+	        }
+	
+	        if (password == null || password.trim().isEmpty()) {
+	            errors.add("Password is required");
+	        } else if (password.length() < 8) {
+	            errors.add("Password must be at least 8 characters long");
+	        }
+	        
+	        try {
+	            PreparedStatement stmnt = conn.prepareStatement("insert into users (name, email, password) values(?, ?, ?);");
+	            stmnt.setString(1, name);
+	            stmnt.setString(2, email);
+	            stmnt.setString(3, password);
+	            stmnt.executeUpdate();
+	            stmnt.close();
+	            response.sendRedirect("Login.jsp");
+	                   } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
         }
-
-        if (email == null || email.trim().isEmpty()) {
-            errors.add("Email is required");
-        } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            errors.add("Invalid email format");
-        }
-
-        if (password == null || password.trim().isEmpty()) {
-            errors.add("Password is required");
-        } else if (password.length() < 8) {
-            errors.add("Password must be at least 8 characters long");
-        }
-        
-        try {
-            String query = "insert into users (name, email, password) values(?, ?, ?);";
-            PreparedStatement stmnt = conn.prepareStatement(query);
-            stmnt.setString(1, name);
-            stmnt.setString(2, email);
-            stmnt.setString(3, password);
-            stmnt.executeUpdate();
-            response.sendRedirect("Login.jsp");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        else {
+	        HttpSession session =  request.getSession(false); 
+	        if (session != null) {
+	            int id2 = Integer.parseInt(session.getAttribute("id").toString());
+	//          update input
+	            String updatedName = request.getParameter("updatedName");
+	            String updatedEmail = request.getParameter("updatedEmail");
+	            String updatedPassword = request.getParameter("updatedPassword");
+	            
+	            
+	            try {
+		            PreparedStatement updateStmt = conn.prepareStatement("UPDATE users SET name=?, email=?, password=? WHERE id=?;");
+		            updateStmt.setString(1,	updatedName);
+		            updateStmt.setString(2, updatedEmail);
+		            updateStmt.setString(3, updatedPassword);
+		            updateStmt.setInt(4, id2); 
+		            updateStmt.executeUpdate();
+		            updateStmt.close();		   
+		            conn.close();
+		            RequestDispatcher rd=request.getRequestDispatcher("Login.jsp");
+		            rd.forward(request,response);
+	            
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	
+	        } else {
+	            // Handle the case where the session is not found or expired
+	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Session not found");
+	        }
         }
     }
 }
