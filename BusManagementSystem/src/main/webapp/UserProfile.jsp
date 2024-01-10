@@ -9,7 +9,7 @@
 </head>
 <body class="bg-secondary">
 
-	 <div><a href="javascript:history.back()" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a></div>
+	 <div><a href="./Index.jsp" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a></div>
 	 <div class="container">
 		 <div class="text-white w-50">
 		 <h2>Manage user profile</h2>

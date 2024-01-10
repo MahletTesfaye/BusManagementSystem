@@ -71,6 +71,7 @@ public class RegistrationServlet extends HttpServlet {
 	            stmnt.setString(3, password);
 	            stmnt.executeUpdate();
 	            stmnt.close();
+	            
 	            response.sendRedirect("Login.jsp");
 	                   } catch (SQLException e) {
 	            e.printStackTrace();
@@ -94,7 +95,7 @@ public class RegistrationServlet extends HttpServlet {
 		            updateStmt.setInt(4, id2); 
 		            updateStmt.executeUpdate();
 		            updateStmt.close();		   
-		            conn.close();
+		            
 		            RequestDispatcher rd=request.getRequestDispatcher("Login.jsp");
 		            rd.forward(request,response);
 	            
@@ -106,6 +107,7 @@ public class RegistrationServlet extends HttpServlet {
 	            // Handle the case where the session is not found or expired
 	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Session not found");
 	        }
+	        
         }
     }
 }
