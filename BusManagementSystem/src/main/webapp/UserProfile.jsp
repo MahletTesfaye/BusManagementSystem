@@ -14,19 +14,19 @@
 		 <div class="text-white w-50">
 		 <h2>Manage user profile</h2>
 			
-			<form action="register" method="post" id="updateForm" class="border border-secondary p-3 ">
+			<form action="update" method="post" id="updateForm" class="border border-secondary p-3 ">
 				<div class="mb-3">
 					<label for="name" class="form-label">Name:</label>
-					<input type="text" class="form-control" id="name" name="updatedName" value = "<%=session.getAttribute("name")%>"/>
+					<input type="text" class="form-control" id="name" name="name" value = "<%=session.getAttribute("name")%>"/>
 				</div>
 				<div class="mb-3">
 					<label for="email" class="form-label">Email:</label>
-					<input type="email" class="form-control" id="email" name="updatedEmail" value = "<%=session.getAttribute("email")%>""/>
+					<input type="email" class="form-control" id="email" name="email" value = "<%=session.getAttribute("email")%>""/>
 				
 				</div>
 				<div class="mb-3">
 					<label for="password" class="form-label">Password:</label>
-					<input type="password" class="form-control" id="password" name="updatedPassword" value = "<%=session.getAttribute("password")%>" />
+					<input type="password" class="form-control" id="password" name="password" value = "<%=session.getAttribute("password")%>" />
 				</div>
 				<button type="submit" class="btn btn-primary">Update</button>
 				
@@ -55,17 +55,10 @@
 	        xhr.open('DELETE', './login', true);
 	        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	        xhr.addEventListener('load', function() {
-	            if (xhr.status === 200) {
-	                // Successful logout
-	                window.location.href = 'Login.jsp'; // Redirect to the login page
-	                
-	            } else {
-	                // Handle error
-	                console.error(xhr.status + ': ' + xhr.statusText);
-	                
-	            }
-	            location.reload();
-	            alert('Successfully logged out!')
+	   
+            location.reload();
+            alert('Successfully logged out!')
+            window.location.href = 'Registration.jsp'; // Redirect to the login page
 	            
 	        });
 	        xhr.send();

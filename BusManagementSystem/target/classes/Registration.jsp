@@ -65,51 +65,31 @@
 		
 		<h2>Registration Form</h2>
 		
-		<form action="register" method="post" class="border border-secondary p-3 ">
-			<div class="mb-3">
-				<label for="name" class="form-label">Name:</label>
-				<input type="text" class="form-control" id="name" name="name" placeholder="Alex" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
+		<form action="register" method="post" class="border border-secondary p-3">
+		    <div class="mb-3">
+		        <label for="name" class="form-label">Name:</label>
+		        <input type="text" class="form-control" id="name" name="name" placeholder="Alex" required/>
+		        
+		    </div>
+		    <div class="mb-3">
+		        <label for="email" class="form-label">Email:</label>
+		        <input type="email" class="form-control" id="email" name="email" placeholder="alex@gmail.com" required/>
+		       
+		    </div>
+		    <div class="mb-3">
+		        <label for="password" class="form-label">Password:</label>
+		        <input type="password" class="form-control" id="password" name="password" required/>
+		        <% 
+		        if (request.getAttribute("errors") != null) {
 		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Name is required")){
-		        		out.println("<div class='text-danger'>Name is required!</div>");
-		        	}
-				}
+		            for (String error : errors) {
+		                out.println("<div class='text-danger'>" + error + "</div>");
+		            }
+		        }
 		        %>
-			</div>
-			<div class="mb-3">
-				<label for="email" class="form-label">Email:</label>
-				<input type="email" class="form-control" id="email" name="email" placeholder="alex@gmail.com" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Email is required")){
-		        		out.println("<div class='text-danger'>Email is required!</div>");
-		        	}
-		        	else if(errors.contains("Invalid email format")){
-		        		out.println("<div class='text-danger'>Invalid email format!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<div class="mb-3">
-				<label for="password" class="form-label">Password:</label>
-				<input type="password" class="form-control" id="password" name="password" required/>
-				<% 
-				if (request.getAttribute("errors") != null) {
-		            List<String> errors = (List<String>) request.getAttribute("errors");
-		        	if (errors.contains("Password is required")){
-		        		out.println("<div class='text-danger'>Password is required!</div>");
-		        	}
-		        	else if(errors.contains("Password must be at least 8 characters long")){
-		        		out.println("<div class='text-danger'>Invalid password format!</div>");
-		        	}
-				}
-		        %>
-			</div>
-			<button type="submit" class="btn btn-primary">Register</button>
-			<div>Already registered? <a href="./Login.jsp">Login</a></div>
+		    </div>
+		    <button type="submit" class="btn btn-primary">Register</button>
+		    <div>Already registered? <a href="./Login.jsp">Login</a></div>
 		</form>
 	</div>
 	<footer class="bg-secondary bg-gradient text-light text-center py-3">

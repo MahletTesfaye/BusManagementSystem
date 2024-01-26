@@ -57,6 +57,17 @@
 	              <li class="nav-item">
 	                  <a class="nav-link text-light text-center fs-5 " href="./Login.jsp">Login</a>
 	              </li>
+	              <% 
+		            String email = (String) session.getAttribute("email");
+		            String password = (String) session.getAttribute("password");
+		            if (email != null && email.equals("Admin@gmail.com") && password != null && password.equals("admin2024")) {
+			        %>
+			        <li class="nav-item">
+			            <a class="nav-link text-light text-center fs-5" href="./Admin.jsp">CreateBus</a>
+			        </li>
+			        <% 
+			            }
+			        %>
 	              <li class="nav-item text-center" style="border: 1px solid black">
 				    <a class="nav-link session" href="UserProfile.jsp">
 				        <div>Welcome, </div>

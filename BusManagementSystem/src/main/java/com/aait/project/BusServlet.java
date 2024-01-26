@@ -106,84 +106,74 @@ private Connection conn; // Declare the Connection object as an instance variabl
         out.flush();
     }
 
-    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        
-        // to update form value accept edit parameter
-        if (request.getParameter("busId")!= null) {
-        	//create parameter
-	        String busId = request.getParameter("busId");
-	        String busName = request.getParameter("busName");
-	        String busNumber = request.getParameter("busNumber");
-	        String destination = request.getParameter("destination");
-	        String latitude = request.getParameter("latitude");
-	        String longitude = request.getParameter("longitude");
-	
-	        try {
-	            Connection conn = DatabaseManager.getConnection();
-		        PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO buses (busId, busName, busNumber, destination, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)");
-		        // Perform the INSERT query
-		        insertStmt.setString(1, busId);
-		        insertStmt.setString(2, busName);
-		        insertStmt.setString(3, busNumber);
-		        insertStmt.setString(4, destination);
-		        insertStmt.setString(5, latitude);
-		        insertStmt.setString(6, longitude);
-		        insertStmt.executeUpdate();
-		        insertStmt.close(); 
-		        conn.close();
-		        RequestDispatcher rds=request.getRequestDispatcher("AdminDisplay.jsp");
-		        rds.forward(request,response);
-		    }catch (SQLException e) {
-		            e.printStackTrace();
-		            // Handle any database errors
-		            // You can redirect the user to an error page or display an error message
-		            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while storing the bus data.");
-		    }
-        }
-        else {
-	        //edit parameter
-	        String updatedBusId = request.getParameter("updatedBusId");
-	        String updatedBusName = request.getParameter("updatedBusName");
-	        String updatedBusNumber = request.getParameter("updatedBusNumber");
-	        String updatedDestination = request.getParameter("updatedDestination");
-	        String updatedLatitude = request.getParameter("updatedLatitude");
-	        String updatedLongitude = request.getParameter("updatedLongitude");
-	           //Store the bus data in the database
-	        try {
-	            Connection conn = DatabaseManager.getConnection();
-	               PreparedStatement updateStmt=conn.prepareStatement("UPDATE buses SET busName = ?, busNumber = ?, destination = ?, latitude = ?, longitude = ? WHERE busId = ?");
-	               updateStmt.setString(1, updatedBusName);
-	               updateStmt.setString(2, updatedBusNumber);
-	               updateStmt.setString(3, updatedDestination);
-	               updateStmt.setString(4, updatedLatitude);
-	               updateStmt.setString(5, updatedLongitude);
-	               updateStmt.setString(6, updatedBusId);
-	               updateStmt.executeUpdate();
-	               updateStmt.close();
-	               RequestDispatcher rd=request.getRequestDispatcher("AdminDisplay.jsp");
-	               rd.forward(request,response);
-	        }catch (SQLException e) {
-	            e.printStackTrace();
-	            // Handle any database errors
-	            // You can redirect the user to an error page or display an error message
-	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while storing the bus data.");
-	        }
+        String busName = request.getParameter("busName");
+        String busNumber = request.getParameter("busNumber");
+        String destination = request.getParameter("destination");
+        String latitude = request.getParameter("latitude");
+        String longitude = request.getParameter("longitude");
+
+        try {
+            Connection conn = DatabaseManager.getConnection();
+
+            // Get the current maximum ID value from the table
+            int maxId = getMaxIdFromBuses(conn);
+
+            // Increment the maxId value to get the next ID
+            int newId = maxId + 1;
+
+            PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO buses (busId, busName, busNumber, destination, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)");
+
+            insertStmt.setInt(1, newId);
+            insertStmt.setString(2, busName);
+            insertStmt.setString(3, busNumber);
+            insertStmt.setString(4, destination);
+            insertStmt.setString(5, latitude);
+            insertStmt.setString(6, longitude);
+            insertStmt.executeUpdate();
+            insertStmt.close();
+            conn.close();
+            RequestDispatcher rds = request.getRequestDispatcher("AdminDisplay.jsp");
+            rds.forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while storing the bus data.");
         }
     }
- 
-           
+
+    private int getMaxIdFromBuses(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT MAX(busId) FROM buses");
+
+        int maxId = 0;
+
+        if (rs.next()) {
+            maxId = rs.getInt(1);
+        }
+
+        rs.close();
+        stmt.close();
+
+        return maxId;
+    }
+    
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String busId = request.getParameter("busId");
 
         try {
+            // Retrieve the current ID of the row to be deleted
+            int currentId = getCurrentId(busId);
+
+            // Perform the delete operation on the row
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM buses WHERE busId = ?");
             stmt.setString(1, busId);
             int affectedRows = stmt.executeUpdate();
             stmt.close();
 
             if (affectedRows > 0) {
+                // Adjust the IDs of the remaining rows if necessary
+                adjustRemainingIds(currentId);
+
                 // Return success response
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
@@ -196,5 +186,25 @@ private Connection conn; // Declare the Connection object as an instance variabl
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while deleting the bus.");
         }
     }
-    
+
+    private int getCurrentId(String busId) throws SQLException {
+        int currentId = 0;
+        PreparedStatement stmt = conn.prepareStatement("SELECT busId FROM buses WHERE busId = ?");
+        stmt.setString(1, busId);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            currentId = rs.getInt("busId");
+        }
+        rs.close();
+        stmt.close();
+        return currentId;
+    }
+
+    private void adjustRemainingIds(int currentId) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("UPDATE buses SET busId = busId - 1 WHERE busId > ?");
+        stmt.setInt(1, currentId);
+        stmt.executeUpdate();
+        stmt.close();
+    }
 }
+    

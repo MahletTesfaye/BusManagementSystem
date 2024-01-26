@@ -74,7 +74,10 @@
 	                  <a class="nav-link text-light text-center fs-5 " href="./Login.jsp">Login</a>
 	              </li>
 	              <li class="nav-item">
-	                  <a class="nav-link text-light text-center fs-5 " href="./AdminDisplay.jsp">AdminDisplay</a>
+	                  <a class="nav-link text-light text-center fs-5 " href="./AdminDisplay.jsp">BusData</a>
+	              </li>
+	              <li class="nav-item">
+	                  <a class="nav-link text-light text-center fs-5 " href="./UserData.jsp">UserData</a>
 	              </li>
 	          </ul>
 	      </div>
@@ -83,9 +86,7 @@
 	<div class="p-5">
 	  <h2>Admin -> Create Bus</h2>
 	  <form action="bus" method="post">
-	    <label for="busId">Bus ID:</label> 
-	   <input type="text" id="busId" name="busId" required>
-	
+	    
 	    <label for="busName">Bus Name:</label>
 	    <input type="text" id="busName" name="busName" required>
 	

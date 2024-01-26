@@ -21,7 +21,7 @@
 	       String latitude = request.getParameter("latitude");
 	       String longitude = request.getParameter("longitude");
 	    %>
-	    <form id="updateForm" class="m-auto" action="bus" method="post"  >
+	    <form id="updateForm" class="m-auto" action="edit" method="post"  >
 	        <h2>Admin - Edit bus</h2>
 	                <div class="mb-3">
 	            <label for="busId" class="form-label">Bus ID: </label>

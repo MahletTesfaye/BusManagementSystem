@@ -24,5 +24,14 @@
       <param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
     </init-param>
   </servlet>
- 
+  <servlet>
+    <description></description>
+    <display-name>UpdateProfile</display-name>
+    <servlet-name>UpdateProfile</servlet-name>
+    <servlet-class>com.aait.project.UpdateProfile</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateProfile</servlet-name>
+    <url-pattern>/UpdateProfile</url-pattern>
+  </servlet-mapping>
 </web-app>

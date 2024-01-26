@@ -11,12 +11,14 @@
     <script src="webjars/leaflet/1.7.1/dist/leaflet.js"></script>
     <style>
 	    li{
-	    	padding: 0 6px;
+	    	padding: 10px;
 	    }
 	    .nav-link:hover{
 	    	border-radius: 50px;
 	    	background-color: black;
 	    }
+	    .session:hover{ border-radius: 0;
+	    	background-color: white; }
 	</style>
 </head>
 
@@ -56,6 +58,30 @@
 	              <li class="nav-item">
 	                  <a class="nav-link text-light text-center fs-5 " href="./Login.jsp">Login</a>
 	              </li>
+	              <% 
+		            String email = (String) session.getAttribute("email");
+		            String password = (String) session.getAttribute("password");
+		            if (email != null && email.equals("Admin@gmail.com") && password != null && password.equals("admin2024")) {
+			        %>
+			        <li class="nav-item">
+			            <a class="nav-link text-light text-center fs-5" href="./Admin.jsp">CreateBus</a>
+			        </li>
+			        <% 
+			            }
+			        %>
+	              <li class="nav-item text-center" style="border: 1px solid black">
+				    <a class="nav-link session" href="UserProfile.jsp">
+				        <div>Welcome, </div>
+				        <% 
+				            String username = (String) session.getAttribute("name");
+				            if (username != null) {
+				                out.println(username);
+				            } else {
+				                out.println("User!");
+				            }
+				        %>
+				    </a>
+				</li>
 	          </ul>
 	      </div>
 	  </div>
