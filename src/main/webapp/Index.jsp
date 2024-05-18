@@ -104,7 +104,7 @@
         </div>
    	</div>
    	<hr>
-    <div class="container m-5">
+    <div class="m-5">
     <div class="row">
         <div class="col-lg-6">
             <div class="table-responsive">
